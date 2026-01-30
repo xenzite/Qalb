@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>রমজান প্রো | দোয়া ও আমল</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #064e3b;
+            --accent: #fbbf24;
+            --bg-light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-light);
+            color: #1e293b;
+            /* Flexbox Layout for Fixed Header/Footer */
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full Viewport Height */
+            overflow: hidden; /* Prevent Body Scroll */
+        }
+
+        .arabic {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            line-height: 1.8;
+        }
+
+        /* Header Fixed Styling */
+        .header-ui {
+            background: linear-gradient(180deg, #064e3b 0%, #065f46 100%);
+            padding: 20px 20px 40px; /* Reduced top padding slightly */
+            border-radius: 0 0 30px 30px;
+            color: white;
+            flex-shrink: 0; /* Header won't shrink */
+            z-index: 20;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Scrollable Main Content */
+        .page-container {
+            flex-grow: 1; /* Takes all remaining space */
+            overflow-y: auto; /* Scroll ONLY inside this area */
+            padding: 0 15px;
+            padding-top: 10px; /* Space between header and cards */
+            padding-bottom: 90px; /* Extra space for bottom nav */
+            margin-top: -30px; /* Pull up effect */
+            z-index: 10;
+            
+            /* Hide Scrollbar */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+        .page-container::-webkit-scrollbar { display: none; }
+
+        .page {
+            display: none;
+            animation: slideFade 0.4s ease-out;
+        }
+        .page.active { display: block; }
+
+        @keyframes slideFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .glass-card {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .section-tag {
+            background: linear-gradient(135deg, #064e3b, #059669);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        /* Bottom Nav Fixed */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            height: 65px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 50;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #94a3b8;
+            transition: all 0.3s ease;
+            flex: 1;
+            padding: 5px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-item i { font-size: 18px; margin-bottom: 3px; }
+        .nav-item span { font-size: 10px; font-weight: 600; }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #cbd5e1;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .copy-btn:active { color: var(--primary); }
+
+    </style>
+</head>
+<body>
+
+    <header class="header-ui">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-[10px] opacity-80 tracking-[3px] uppercase font-bold text-emerald-100">Ramadan Kareem</p>
+                <h1 id="main-title" class="text-2xl font-bold mt-1">রোজার নিয়ত</h1>
+            </div>
+            <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-md border border-white/10">
+                <i class="fas fa-moon text-yellow-300 text-sm"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <div class="h-6"></div>
+
+        <section id="niyat" class="page active">
+            <div class="glass-card p-5">
+                <span class="section-tag">রোজার নিয়ত</span>
+                <div class="copy-btn" onclick="copyText('niyat-text')"><i class="far fa-copy"></i></div>
+                
+                <div id="niyat-text">
+                    <h3 class="arabic text-2xl text-right text-emerald-900 mb-4 leading-loose">
+                        نَوَيْتُ اَنْ اَصُوْمَ غَدًا مِّنْ شَهْرِ رَمْضَانَ الْمُبَارَكِ فَرْضًا لَكَ يَا اَللهُ فَتَقَبَّلْ مِنِّى اِنَّكَ اَنْتَ السَّمِيْعُ الْعَلِيْمُ
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="p-3 bg-emerald-50 rounded-xl border-l-4 border-emerald-500">
+                            <p class="text-[10px] font-bold text-emerald-600 uppercase mb-1">উচ্চারণ</p>
+                            <p class="text-sm text-gray-800 leading-relaxed font-medium">নাওয়াইতু আন আসুমা গাদাম মিন শাহরি রমাদানাল মুবারাকি ফারদাল্লাকা ইয়া আল্লাহু ফাতাকাব্বাল মিন্নি ইন্নাকা আনতাস সামিউল আলিম।</p>
+                        </div>
+                        
+                        <div class="p-3 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+                            <p class="text-[10px] font-bold text-amber-600 uppercase mb-1">অর্থ</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">হে আল্লাহ! আগামীকাল পবিত্র রমজান মাসে তোমার পক্ষ হতে নির্ধারিত ফরজ রোজা রাখার নিয়ত করলাম। অতএব তুমি আমার পক্ষ থেকে তা কবুল কর। নিশ্চয়ই তুমি সর্বশ্রোতা ও সর্বজ্ঞ।</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sehri" class="page">
+            <div class="glass-card p-5">
+                <span class="section-tag">সেহরির দোয়া</span>
+                <div class="copy-btn" onclick="copyText('sehri-text')"><i class="far fa-copy"></i></div>
+                
+                <div id="sehri-text">
+                    <h3 class="arabic text-2xl text-right text-emerald-900 mb-4 leading-loose">
+                        وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="p-3 bg-emerald-50 rounded-xl border-l-4 border-emerald-500">
+                            <p class="text-[10px] font-bold text-emerald-600 uppercase mb-1">উচ্চারণ</p>
+                            <p class="text-sm text-gray-800 leading-relaxed font-medium">ওয়া বিসাওমি গাদিন নাওয়াইতু মিন শাহরি রমাদান।</p>
+                        </div>
+                        
+                        <div class="p-3 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+                            <p class="text-[10px] font-bold text-amber-600 uppercase mb-1">অর্থ</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">আমি রমজান মাসের আগামীকালের রোজা রাখার নিয়ত করছি।</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="iftar" class="page">
+            <div class="glass-card p-5">
+                <span class="section-tag">ইফতারের দোয়া</span>
+                <div class="copy-btn" onclick="copyText('iftar-text')"><i class="far fa-copy"></i></div>
+                
+                <div id="iftar-text">
+                    <h3 class="arabic text-2xl text-right text-emerald-900 mb-4 leading-loose">
+                        اَللَّهُمَّ لَكَ صُمْتُ وَعَلَى رِزْقِكَ اَفْطَرْتُ
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="p-3 bg-emerald-50 rounded-xl border-l-4 border-emerald-500">
+                            <p class="text-[10px] font-bold text-emerald-600 uppercase mb-1">উচ্চারণ</p>
+                            <p class="text-sm text-gray-800 leading-relaxed font-medium">আল্লাহুম্মা লাকা সুমতু ওয়া আলা রিজকিকা আফতারতু।</p>
+                        </div>
+                        
+                        <div class="p-3 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+                            <p class="text-[10px] font-bold text-amber-600 uppercase mb-1">অর্থ</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">হে আল্লাহ! আমি তোমারই সন্তুষ্টির জন্য রোজা রেখেছি এবং তোমারই দেওয়া রিজিক দ্বারা ইফতার করছি।</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="amal" class="page">
+            <div class="glass-card p-4 flex gap-3 items-start">
+                <div class="w-8 h-8 bg-emerald-100 rounded-lg flex-shrink-0 flex items-center justify-center text-emerald-600 font-bold text-sm">১</div>
+                <div>
+                    <h4 class="font-bold text-emerald-900 text-sm mb-1">কুরআন তিলাওয়াত</h4>
+                    <p class="text-xs text-gray-500">প্রতিদিন অন্তত ১ পারা বা ১ রুকু হলেও অর্থসহ কুরআন তিলাওয়াত করা।</p>
+                </div>
+            </div>
+
+            <div class="glass-card p-4">
+                <div class="flex gap-3 items-start mb-3">
+                    <div class="w-8 h-8 bg-amber-100 rounded-lg flex-shrink-0 flex items-center justify-center text-amber-600 font-bold text-sm">২</div>
+                    <div>
+                        <h4 class="font-bold text-emerald-900 text-sm mb-1">ইস্তেগফার পড়া</h4>
+                        <p class="text-xs text-gray-500">বেশি বেশি ক্ষমা প্রার্থনা করা।</p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                    <p class="arabic text-xl text-right mb-1 text-emerald-800">أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ</p>
+                    <p class="text-[10px] text-gray-500 italic">উচ্চারণ: আসতাগফিরুল্লাহাল আজিম।</p>
+                </div>
+            </div>
+
+            <div class="glass-card p-4">
+                <div class="flex gap-3 items-start mb-3">
+                    <div class="w-8 h-8 bg-red-100 rounded-lg flex-shrink-0 flex items-center justify-center text-red-600 font-bold text-sm">৩</div>
+                    <div>
+                        <h4 class="font-bold text-emerald-900 text-sm mb-1">লাইলাতুল কদরের দোয়া</h4>
+                        <p class="text-xs text-gray-500">শেষ দশকে এই দোয়াটি বেশি করা।</p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                    <p class="arabic text-xl text-right mb-1 text-emerald-800">اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي</p>
+                    <p class="text-[10px] text-gray-500 italic">উচ্চারণ: আল্লাহুম্মা ইন্নাকা আফুউন তুহিব্বুল আফওয়া ফাফু আন্নি।</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <button onclick="navigate('niyat', 'রোজার নিয়ত', this)" class="nav-item active">
+            <i class="fas fa-kaaba"></i>
+            <span>নিয়ত</span>
+        </button>
+        <button onclick="navigate('sehri', 'সেহরির দোয়া', this)" class="nav-item">
+            <i class="fas fa-cloud-moon"></i>
+            <span>সেহরি</span>
+        </button>
+        <button onclick="navigate('iftar', 'ইফতারের দোয়া', this)" class="nav-item">
+            <i class="fas fa-utensils"></i>
+            <span>ইফতার</span>
+        </button>
+        <button onclick="navigate('amal', 'নেক আমল', this)" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span>আমল</span>
+        </button>
+    </nav>
+
+    <script>
+        function navigate(pageId, title, element) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            
+            // Show target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Scroll container to top
+            document.querySelector('.page-container').scrollTop = 0;
+
+            // Update Title
+            document.getElementById('main-title').innerText = title;
+
+            // Update Nav State
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Vibrate feedback
+            if (window.navigator.vibrate) window.navigator.vibrate(10);
+        }
+
+        function copyText(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                // Simple feedback (could be improved with a toast)
+                const btn = document.activeElement;
+                const icon = btn.querySelector('i');
+                if(icon) {
+                    icon.className = 'fas fa-check text-green-500';
+                    setTimeout(() => icon.className = 'far fa-copy', 1000);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
